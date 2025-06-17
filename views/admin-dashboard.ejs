@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .header__buttons {
+            position: fixed;
+            top: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        .header__buttons a {
+            background-color: #ffcc00;
+            color: black;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .header__buttons a:hover {
+            background-color: #e6b800;
+        }
+
+        .card {
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 30%;
+        }
+
+        canvas {
+            width: 100%;
+            height: 500px;
+            margin: 20px auto;
+        }
+
+        .message {
+            color: green;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+
+        <% if (typeof message !== 'undefined' && message) { %>
+            <p class="message"><%= message %></p>
+        <% } %>
+
+        <div class="stats">
+            <div class="card">
+                <h2>Total Nurses</h2>
+                <p id="nurseCount"><%= nurseCount %></p>
+            </div>
+            <div class="card">
+                <h2>Total Patients</h2>
+                <p id="patientCount"><%= patientCount %></p>
+            </div>
+            <div class="card">
+                <h2>Connected Patients</h2>
+                <p id="connectedPatientsCount"><%= connectedPatientsCount %></p>
+            </div>
+        </div>
+
+        <h3>Patient vs Nurse Count</h3>
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <br><br>
+
+    <script>
+        const nurseCount = <%= nurseCount %>;
+        const patientCount = <%= patientCount %>;
+        const connectedPatientsCount = <%= connectedPatientsCount %>;
+
+        const data = {
+            labels: ['Nurses', 'Patients', 'Connected Patients'],
+            datasets: [{
+                label: 'Total Count',
+                data: [nurseCount, patientCount, connectedPatientsCount],
+                backgroundColor: ['rgba(54, 162, 235, 0.6)', 'rgba(255, 99, 132, 0.6)', 'rgba(255, 206, 86, 0.6)'],
+                borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)', 'rgba(255, 206, 86, 1)'],
+                borderWidth: 1
+            }]
+        };
+
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        };
+
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, config);
+    </script>
+
+    <div class="header__buttons">
+        <a href="/assign">Assign Nurse</a>
+        <a href="/logout">Logout</a>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assign Nurse to Patient</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 80px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        select, button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            padding: 10px 15px;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Assign Nurse to Patient</h1>
+
+        <form action="/assign" method="POST">
+            <label for="nurseId">Select Nurse:</label>
+            <select name="nurseId" id="nurseId" required>
+                <% nurses.forEach(function(nurse) { %>
+                    <option value="<%= nurse._id %>"><%= nurse.name %></option>
+                <% }); %>
+            </select>
+
+            <label for="patientId">Select Patient:</label>
+            <select name="patientId" id="patientId" required>
+                <% patients.forEach(function(patient) { %>
+                    <option value="<%= patient._id %>"><%= patient.name %></option>
+                <% }); %>
+            </select>
+
+            <button type="submit">Assign</button>
+        </form>
+
+        <a href="/admin-dashboard" class="back-button">Back to Dashboard</a>
+    </div>
+
+</body>
+
+</html>
+
