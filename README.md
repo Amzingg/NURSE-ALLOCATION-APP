@@ -24,6 +24,7 @@ Setup Instructions
 
 Clone the repository:
 git clone https://github.com/your-username/nurse-allocation-app.git
+
 cd nurse-allocation-app
 
 Install dependencies:
